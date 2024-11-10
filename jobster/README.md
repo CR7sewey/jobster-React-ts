@@ -18,11 +18,11 @@ export default tseslint.config({
   languageOptions: {
     // other options...
     parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
       tsconfigRootDir: import.meta.dirname,
     },
   },
-})
+});
 ```
 
 - Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
@@ -31,11 +31,11 @@ export default tseslint.config({
 
 ```js
 // eslint.config.js
-import react from 'eslint-plugin-react'
+import react from "eslint-plugin-react";
 
 export default tseslint.config({
   // Set the react version
-  settings: { react: { version: '18.3' } },
+  settings: { react: { version: "18.3" } },
   plugins: {
     // Add the react plugin
     react,
@@ -44,7 +44,52 @@ export default tseslint.config({
     // other rules...
     // Enable its recommended rules
     ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
+    ...react.configs["jsx-runtime"].rules,
   },
-})
+});
 ```
+
+## Project
+
+Install
+
+```sh
+npm create vite@latest jobster -- --template react-ts
+```
+
+Install dependencies
+
+```sh
+cd jobster
+npm i
+```
+
+### Pages
+
+- HomeLayout
+- LandingPage
+- Error
+- Login
+- Register
+- Stats
+- AllJobs
+- AddJob
+- Profile
+
+### Normalize CSS
+
+- CSS in JS (styled-components)
+- saves times on the setup
+- less lines of css
+- speeds up the development
+- normalize.css
+- small CSS file that provides cross-browser consistency in the default styling of HTML elements
+- [Normalize]https://necolas.github.io/normalize.css/
+
+```sh
+npm i normalize.css
+```
+
+- import normalize in main.tsx
+- SET BEFORE 'index.css'
+- replace contents of index.css
