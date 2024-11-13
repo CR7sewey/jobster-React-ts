@@ -93,3 +93,59 @@ npm i normalize.css
 - import normalize in main.tsx
 - SET BEFORE 'index.css'
 - replace contents of index.css
+
+### React Router - Setup
+
+```sh
+npm i react-router-dom
+```
+
+```ts
+function App() {
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <HomeLayout />,
+      errorElement: <Error />,
+      children: [
+        {
+          index: true,
+          element: <LandingPage />,
+        },
+        {
+          path: "/all-jobs",
+          element: <AllJobs />,
+        },
+        {
+          path: "/add-job",
+          element: <AddJob />,
+        },
+        {
+          path: "/stats",
+          element: <Stats />,
+        },
+        {
+          path: "/profile",
+          element: <Profile />,
+        },
+      ],
+    },
+    {
+      path: "/login",
+      element: <Login />,
+      errorElement: <Error />,
+    },
+    {
+      path: "/register",
+      element: <Register />,
+      errorElement: <Error />,
+    },
+  ]);
+
+  return (
+    <>
+      <RouterProvider router={router} />
+    </>
+  );
+}
+```
