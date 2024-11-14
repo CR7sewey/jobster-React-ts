@@ -96,6 +96,8 @@ npm i normalize.css
 
 ### React Router - Setup
 
+[ReactRouter]https://reactrouter.com/en/main/start/overview
+
 ```sh
 npm i react-router-dom
 ```
@@ -181,6 +183,109 @@ export const LandingPage = () => {
         </div>
       </div>
     </main>
+  );
+};
+```
+
+### Styled Components + Landing Page
+
+- CSS in JS
+- Styled Components
+- element can be any html element (div,button,section, etc)
+- no name collisions, since unique class
+- vscode-styled-components extension
+- colors and bugs
+- style entire react component
+
+```sh
+npm install styled-components
+```
+
+- Wrapper
+
+```ts
+import styled from "styled-components";
+
+const Wrapper = styled.main`
+  // styles go here
+  nav {
+    width: var(--fluid-width);
+    max-width: var(--max-width);
+    margin: 0 auto;
+    height: var(--nav-height);
+    display: flex;
+    align-items: center;
+  }
+
+  .page {
+    min-height: calc(110vh - var(--nav-height));
+    display: grid;
+    align-items: center;
+    margin-top: -3rem;
+  }
+
+  h1 {
+    font-weight: bold;
+  }
+
+  h1 span {
+    color: var(--primary-500);
+  }
+
+  p {
+    color: var(--grey-600);
+  }
+  .main-img {
+    display: none;
+  }
+
+  @media (min-width: 992px) {
+    .page {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 3rem;
+    }
+    .main-img {
+      display: block;
+    }
+  }
+`;
+
+export default Wrapper;
+```
+
+- Landing Page
+
+```tsx
+import { Link } from "react-router-dom";
+import logo from "../../public/logo.svg";
+import main from "../../public/main.svg";
+import Wrapper from "../assets/wrappers/LandingPageWrapper";
+
+export const LandingPage = () => {
+  return (
+    <Wrapper>
+      <nav>
+        <img src={logo} alt="J" />
+      </nav>
+      <div className="page">
+        <div>
+          <h1>
+            Job <span>Tracking</span> App
+          </h1>
+          <p>
+            Crucifix narwhal street art asymmetrical, humblebrag tote bag pop-up
+            fixie raclette taxidermy craft beer. Brunch bitters synth, VHS
+            crucifix heirloom meggings bicycle rights.
+          </p>
+          <Link to={"/register"}>
+            <button className="btn btn-hero">Login / Register</button>
+          </Link>
+        </div>
+        <div>
+          <img src={main} alt="main main-img" />
+        </div>
+      </div>
+    </Wrapper>
   );
 };
 ```
