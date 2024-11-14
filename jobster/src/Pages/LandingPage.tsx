@@ -1,16 +1,30 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import logo from '../../public/logo.svg'
+import main from '../../public/main.svg'
 
 export const LandingPage = () => {
     return (
-        <div>
-            <br />
-            <Link to={'/login'}><button>Login</button></Link>
-            <br />
-            <Link to={'/register'}><button>Register</button></Link>
-            <br />
-            <Link to={'/all-jobs'}><button>All-jobs</button></Link>
+        <main>
+            <nav>
+                <img src={logo} alt='J' />
+            </nav>
 
-        </div>
+            <div>
+                <div>
+                    <h1>Job <span>Tracking</span> App</h1>
+                    <p>Crucifix narwhal street art asymmetrical, humblebrag tote bag pop-up
+                        fixie raclette taxidermy craft beer. Brunch bitters synth, VHS
+                        crucifix heirloom meggings bicycle rights.</p>
+                    <Link to={'/register'}>
+                        <button className='btn btn-hero'>Login / Register</button>
+                    </Link>
+                </div>
+                <div>
+                    <img src={main} alt='main' />
+                </div>
+
+            </div>
+        </main>
     )
 }
