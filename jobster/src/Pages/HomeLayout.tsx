@@ -1,8 +1,18 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigation } from 'react-router-dom'
+import { Loading } from '../components/Loading';
 
 export const HomeLayout = () => {
+    const loading = useNavigation()
+    const isLoading = loading.state === 'loading';
+
     return (
-        <div className='container'><Outlet /></div>
+        <>
+            <section>
+                {isLoading ? <Loading />
+                    : <div className='container'><Outlet /></div>
+                }
+            </section>
+        </>
     )
 }

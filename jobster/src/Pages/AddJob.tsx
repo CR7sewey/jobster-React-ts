@@ -1,7 +1,7 @@
-import React from 'react'
+import { SearchContainer } from '../components/form/SearchContainer';
 
 export const AddJob = () => {
     return (
-        <div>AddJob</div>
+        <SearchContainer />
     )
 }
