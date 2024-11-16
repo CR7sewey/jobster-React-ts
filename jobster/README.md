@@ -290,12 +290,12 @@ export const LandingPage = () => {
 };
 ```
 
-### Add-job - Part 1
+### All-jobs - Part 1
 
-- AddJob
+- AllJob
 
 ```tsx
-export const AddJob = () => {
+export const AllJobs = () => {
   return <SearchContainer />;
 };
 ```
@@ -339,3 +339,136 @@ export const SearchContainer = () => {
 ```
 
 rest: types, FormInputText, FormSelect, SearchContainer Wrapper
+
+### Add-jobs - Part 2
+
+- All-jobs
+
+```tsx
+import { SearchContainer } from "../components/form/SearchContainer";
+import { ListOfJobs } from "../components/ListOfJobs";
+
+const AllJobs = () => {
+  return (
+    <>
+      <SearchContainer />
+      <ListOfJobs />
+    </>
+  );
+};
+
+export default AllJobs;
+```
+
+- ListOfJobs
+
+```tsx
+import Wrapper from "../assets/wrappers/ListOfJobs";
+import { Job } from "./Job";
+
+const jobs = [
+  {
+    id: 1,
+    position: "Dev",
+    company: "Micro",
+    jobLocation: "Lisbon",
+    jobType: "Internship",
+    createdAt: new Date().toLocaleDateString(),
+    status: "Pending",
+  },
+  {
+    id: 2,
+    position: "Accountant",
+    company: "InnoWave",
+    jobLocation: "Porto",
+    jobType: "Full-Time",
+    createdAt: new Date().toLocaleDateString(),
+    status: "Interview",
+  },
+];
+
+export const ListOfJobs = () => {
+  return (
+    <Wrapper>
+      <h5>
+        {jobs.length} Job{jobs.length > 1 ? "s" : ""} Found
+      </h5>
+      <div className="jobs">
+        {jobs.map((item) => {
+          return <Job {...item} key={item.id} />;
+        })}
+      </div>
+    </Wrapper>
+  );
+};
+```
+
+- Job
+
+```tsx
+import Wrapper from "../assets/wrappers/Job";
+import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
+export const Job = ({
+  position,
+  company,
+  jobLocation,
+  jobType,
+  createdAt,
+  status,
+}: {
+  position: string;
+  company: string;
+  jobLocation: string;
+  jobType: string;
+  createdAt: string;
+  status: string;
+}) => {
+  return (
+    <Wrapper>
+      <header>
+        <div className="main-icon">{company.charAt(0)}</div>
+        <div className="info">
+          <h5>{position}</h5>
+          <p>{company}</p>
+        </div>
+      </header>
+      <div className="content">
+        <div className="content-center">
+          <div className="icons">
+            <span className="icon">
+              <FaLocationArrow />{" "}
+            </span>
+            <span className="text">{jobLocation}</span>
+          </div>
+          <div className="icons">
+            <span className="icon">
+              <FaCalendarAlt />
+            </span>
+            <span className="text">{createdAt}</span>
+          </div>
+          <div className="icons">
+            <span className="icon">
+              <FaBriefcase />
+            </span>
+            <span className="text">{jobType}</span>
+          </div>
+
+          <div className={`status ${status.toLowerCase()}`}>{status}</div>
+        </div>
+        <footer>
+          <div className="actions">
+            <button className="btn edit-btn">
+              <Link to={"/add-job"}>Edit</Link>
+            </button>
+            <button className="btn delete-btn">
+              <Link to={"/add-job"}>Delete</Link>
+            </button>
+          </div>
+        </footer>
+      </div>
+    </Wrapper>
+  );
+};
+```

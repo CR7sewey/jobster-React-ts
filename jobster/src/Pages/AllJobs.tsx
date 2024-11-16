@@ -1,10 +1,12 @@
-import React from 'react'
+import { SearchContainer } from '../components/form/SearchContainer';
+import { ListOfJobs } from '../components/ListOfJobs';
 
 const AllJobs = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <SearchContainer />
+            <ListOfJobs />
+        </>
     )
 }
 
