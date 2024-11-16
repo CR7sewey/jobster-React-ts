@@ -9,7 +9,7 @@ import AllJobs from './Pages/AllJobs'
 import { AddJob } from './Pages/AddJob'
 import Stats from './Pages/Stats'
 import Profile from './Pages/Profile'
-import { Login } from './Pages/Login'
+import { action as loginAction, Login } from './Pages/Login'
 import Register, { action as registerAction } from './Pages/Register'
 
 function App() {
@@ -42,6 +42,7 @@ function App() {
       path: '/login',
       element: <Login />,
       errorElement: <Error />,
+      action: loginAction
     },
     {
       path: '/register',

@@ -499,3 +499,5 @@ const Loading = ({ center }: { center: string }) => {
   return <div className={center ? "loading loading-center" : "loading"}></div>;
 };
 ```
+
+### Login and Register + Axios - Part 1 - check script
