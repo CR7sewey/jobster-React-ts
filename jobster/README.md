@@ -340,7 +340,7 @@ export const SearchContainer = () => {
 
 rest: types, FormInputText, FormSelect, SearchContainer Wrapper
 
-### Add-jobs - Part 2
+### All-jobs - Part 2
 
 - All-jobs
 
@@ -470,5 +470,32 @@ export const Job = ({
       </div>
     </Wrapper>
   );
+};
+```
+
+### Loading and Error components
+
+- Error
+
+```tsx
+const Error = () => {
+  return (
+    <Wrapper className="full-page">
+      <div>
+        <img src={img} alt="not found" />
+        <h3>Ohh! Page Not Found</h3>
+        <p>We can't seem to find the page you're looking for</p>
+        <Link to="/">back home</Link>
+      </div>
+    </Wrapper>
+  );
+};
+```
+
+- Loading
+
+```tsx
+const Loading = ({ center }: { center: string }) => {
+  return <div className={center ? "loading loading-center" : "loading"}></div>;
 };
 ```

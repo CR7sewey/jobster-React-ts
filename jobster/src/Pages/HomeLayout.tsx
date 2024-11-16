@@ -1,6 +1,5 @@
-import React from 'react'
 import { Outlet, useNavigation } from 'react-router-dom'
-import { Loading } from '../components/Loading';
+import Loading from '../components/Loading';
 
 export const HomeLayout = () => {
     const loading = useNavigation()
@@ -9,7 +8,7 @@ export const HomeLayout = () => {
     return (
         <>
             <section>
-                {isLoading ? <Loading />
+                {isLoading ? <Loading center={"center"} />
                     : <div className='container'><Outlet /></div>
                 }
             </section>
