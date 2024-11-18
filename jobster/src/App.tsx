@@ -13,6 +13,7 @@ import { action as loginAction, Login } from './Pages/Login'
 import Register, { action as registerAction } from './Pages/Register'
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
+import { store } from './Store'
 
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
       path: '/login',
       element: <Login />,
       errorElement: <Error />,
-      action: loginAction
+      action: loginAction(store)
     },
     {
       path: '/register',

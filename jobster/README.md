@@ -518,3 +518,97 @@ import "react-toastify/dist/ReactToastify.css";
 
 return <ToastContainer position="top-center" />;
 ```
+
+### Redux + Login Update
+
+```sh
+npm install @reduxjs/toolkit react-redux
+```
+
+- userSlice
+
+```tsx
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
+
+type User = {
+  name: string;
+  email: string;
+  token: string;
+};
+
+const initialState: { isLoading: boolean; user: User | null } = {
+  isLoading: false,
+  user: null,
+};
+
+export const counterSlice = createSlice({
+  name: "user",
+  initialState: initialState,
+  reducers: {
+    loginUser: (
+      state,
+      action: PayloadAction<{ isLoading: boolean; user: User | null }>
+    ) => {
+      console.log(action);
+      state.user = {
+        ...action.payload.user,
+        token: action.payload.token,
+      };
+      localStorage.setItem("user", JSON.stringify(state.user));
+      toast.success(`welcome, ${state?.user?.name}`);
+    },
+  },
+});
+
+// Action creators are generated for each case reducer function
+export const { loginUser } = counterSlice.actions;
+
+export default counterSlice.reducer;
+```
+
+- Store
+
+```tsx
+import { configureStore } from "@reduxjs/toolkit";
+import userReducer from "./features/user/userSlice";
+
+export const store = configureStore({
+  reducer: {
+    counter: userReducer,
+  },
+});
+
+export type RootState = ReturnType<typeof store.getState>; //type  hook to access the state
+export type AppDispatch = typeof store.dispatch; // type hook to dispatch an action
+```
+
+- Login
+
+```tsx
+export const action =
+  (store) =>
+  async ({ request }: { request: Request }) => {
+    const dataForm = await request.formData(); // FormData Object
+    const entries = [...dataForm.values()]; //.entries
+    if (entries.includes("")) {
+      return toast.error("You need to provide all the info.");
+    }
+    const data = Object.fromEntries(dataForm);
+    console.log(data);
+    try {
+      const response = await customFetch.post("/auth/login", data); //API call
+      store.dispatch(loginUser(response.data));
+      toast.success(`You are logged in, ${response?.data?.user?.name}`);
+      console.log(response.data);
+      return redirect("/all-jobs");
+    } catch (e) {
+      toast.error(
+        e?.response?.data?.error?.message ||
+          "please double check your credentials"
+      );
+      console.log(e);
+      return e;
+    }
+  };
+```

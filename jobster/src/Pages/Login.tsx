@@ -4,8 +4,9 @@ import { FormInputText } from '../components/form/FormInputText'
 import Wrapper from '../assets/wrappers/Register'
 import customFetch from '../utils/axios'
 import { toast } from 'react-toastify'
+import { loginUser } from '../features/user/userSlice'
 
-export const action = async ({ request }: { request: Request }) => {
+export const action = (store) => async ({ request }: { request: Request }) => {
     const dataForm = await request.formData(); // FormData Object
     const entries = [...dataForm.values()]; //.entries
     if (entries.includes("")) {
@@ -15,7 +16,8 @@ export const action = async ({ request }: { request: Request }) => {
     console.log(data)
     try {
         const response = await customFetch.post('/auth/login', data) //API call
-        toast.success(`You are logged in, ${response?.user?.name}`);
+        store.dispatch(loginUser(response.data))
+        toast.success(`You are logged in, ${response?.data?.user?.name}`);
         console.log(response.data)
         return redirect("/all-jobs");
     } catch (e) {
