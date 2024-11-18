@@ -501,3 +501,20 @@ const Loading = ({ center }: { center: string }) => {
 ```
 
 ### Login and Register + Axios - Part 1 - check script
+
+#### React Toastify
+
+[React Toastify](https://www.npmjs.com/package/react-toastify)
+
+```sh
+npm install --save react-toastify
+```
+
+App.js
+
+```js
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+return <ToastContainer position="top-center" />;
+```

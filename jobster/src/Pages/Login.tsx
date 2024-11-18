@@ -3,25 +3,26 @@ import logo from '../../public/logo.svg'
 import { FormInputText } from '../components/form/FormInputText'
 import Wrapper from '../assets/wrappers/Register'
 import customFetch from '../utils/axios'
+import { toast } from 'react-toastify'
 
 export const action = async ({ request }: { request: Request }) => {
     const dataForm = await request.formData(); // FormData Object
     const entries = [...dataForm.values()]; //.entries
     if (entries.includes("")) {
-        //return toast.error('You need to provide all the info.');
+        return toast.error('You need to provide all the info.');
     }
     const data = Object.fromEntries(dataForm);
     console.log(data)
     try {
-        const response = await customFetch.get('/auth/login', data) //API call
-        //toast.success(`You are registered, ${data.username}`);
+        const response = await customFetch.post('/auth/login', data) //API call
+        toast.success(`You are logged in, ${response?.user?.name}`);
         console.log(response.data)
         return redirect("/all-jobs");
     } catch (e) {
-        /*toast.error(
+        toast.error(
             e?.response?.data?.error?.message ||
             "please double check your credentials"
-        );*/
+        );
         console.log(e)
         return e;
     }

@@ -11,6 +11,9 @@ import Stats from './Pages/Stats'
 import Profile from './Pages/Profile'
 import { action as loginAction, Login } from './Pages/Login'
 import Register, { action as registerAction } from './Pages/Register'
+import { ToastContainer } from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
+
 
 function App() {
 
@@ -55,6 +58,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <ToastContainer position="top-center" />
     </>
   )
 }
