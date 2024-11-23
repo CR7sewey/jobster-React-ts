@@ -2,10 +2,10 @@ import { Form, Link, redirect } from 'react-router-dom'
 import logo from '../../public/logo.svg'
 import { FormInputText } from '../components/form/FormInputText'
 import Wrapper from '../assets/wrappers/Register'
-import customFetch from '../utils/axios'
 import { toast } from 'react-toastify'
+import { registerUser } from '../features/user/userSlice'
 
-export const action = async ({ request }: { request: Request }) => {
+export const action = (store) => async ({ request }: { request: Request }) => {
     const dataForm = await request.formData(); // FormData Object
     const entries = [...dataForm.values()]; //.entries
     if (entries.includes("")) {
@@ -13,10 +13,11 @@ export const action = async ({ request }: { request: Request }) => {
     }
     const data = Object.fromEntries(dataForm);
     try {
-        const response = await customFetch.post('/auth/register', data) //API call
-        toast.success(`You are registered, ${data.username}`);
-        console.log(response.data)
-        return redirect("/login");
+        //const response = await customFetch.post('/auth/register', data) //API call
+        //toast.success(`You are registered, ${data.username}`);
+        //console.log(response.data)
+        store.dispatch(registerUser({ ...data }))
+        return redirect("/all-jobs");
     } catch (e) {
         toast.error(
             e?.response?.data?.error?.message ||

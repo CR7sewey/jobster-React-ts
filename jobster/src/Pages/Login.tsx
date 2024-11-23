@@ -13,12 +13,12 @@ export const action = (store) => async ({ request }: { request: Request }) => {
         return toast.error('You need to provide all the info.');
     }
     const data = Object.fromEntries(dataForm);
-    console.log(data)
+    console.log({ ...data })
     try {
-        const response = await customFetch.post('/auth/login', data) //API call
-        store.dispatch(loginUser(response.data))
-        toast.success(`You are logged in, ${response?.data?.user?.name}`);
-        console.log(response.data)
+        //const response = await customFetch.post('/auth/login', data) //API call
+        store.dispatch(loginUser({ ...data }))
+        //toast.success(`You are logged in, ${response?.data?.user?.name}`);
+        //console.log(response.data)
         return redirect("/all-jobs");
     } catch (e) {
         toast.error(

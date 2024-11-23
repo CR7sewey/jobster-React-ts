@@ -583,6 +583,18 @@ export type RootState = ReturnType<typeof store.getState>; //type  hook to acces
 export type AppDispatch = typeof store.dispatch; // type hook to dispatch an action
 ```
 
+- main
+
+```tsx
+createRoot(document.getElementById("root")!).render(
+  <StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </StrictMode>
+);
+```
+
 - Login
 
 ```tsx
@@ -612,3 +624,84 @@ export const action =
     }
   };
 ```
+
+- Register
+
+```tsx
+export const action = async ({ request }: { request: Request }) => {
+  const dataForm = await request.formData(); // FormData Object
+  const entries = [...dataForm.values()]; //.entries
+  if (entries.includes("")) {
+    return toast.error("You need to provide all the info.");
+  }
+  const data = Object.fromEntries(dataForm);
+  try {
+    const response = await customFetch.post("/auth/register", data); //API call
+    toast.success(`You are registered, ${data.username}`);
+    console.log(response.data);
+    return redirect("/login");
+  } catch (e) {
+    toast.error(
+      e?.response?.data?.error?.message ||
+        "please double check your credentials"
+    );
+    console.log(e);
+    return e;
+  }
+};
+```
+
+### API
+
+- Root URL
+- https://redux-toolkit-jobster-api-server.onrender.com/api/v1
+
+- NODE COURSE
+
+##### Register USER
+
+- https://redux-toolkit-jobster-api-server.onrender.com/api/v1/auth/register
+
+- POST /auth/register
+- {name:'john',email:'john@gmail.com',password:'secret'}
+- sends back the user object with token
+
+##### Register USER - TESTING()
+
+- POST /auth/testingRegister
+- {name:'john',email:'john@gmail.com',password:'secret'}
+- sends back the user object with token
+
+##### Login USER
+
+- POST /auth/login
+- {email:'john@gmail.com',password:'secret'}
+- sends back the user object with token
+
+##### Update USER
+
+- PATCH /auth/updateUser
+- { email:'john@gmail.com', name:'john', lastName:'smith', location:'my location' }
+- sends back the user object with token
+
+### Custom Axios Instance
+
+- utils/axios.js
+
+```js
+import axios from "axios";
+
+const customFetch = axios.create({
+  baseURL: "https://redux-toolkit-jobster-api-server.onrender.com/api/v1",
+});
+
+export default customFetch;
+```
+
+### Changes - bcs I changed the way of consuming the API (through createAsyncThunk)
+
+- hooks
+- App
+- Register
+- Login
+- userSlice

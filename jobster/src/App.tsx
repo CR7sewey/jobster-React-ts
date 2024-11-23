@@ -5,7 +5,7 @@ import {
   createBrowserRouter, RouterProvider
 } from 'react-router-dom'
 import { LandingPage } from './Pages/LandingPage'
-import AllJobs from './Pages/AllJobs'
+import AllJobs, { loader as allJobsLoader } from './Pages/AllJobs'
 import { AddJob } from './Pages/AddJob'
 import Stats from './Pages/Stats'
 import Profile from './Pages/Profile'
@@ -29,7 +29,8 @@ function App() {
           element: <LandingPage />
         }, {
           path: '/all-jobs',
-          element: <AllJobs />
+          element: <AllJobs />,
+          loader: allJobsLoader(store)
         }, {
           path: '/add-job',
           element: <AddJob />
@@ -52,7 +53,7 @@ function App() {
       path: '/register',
       element: <Register />,
       errorElement: <Error />,
-      action: registerAction
+      action: registerAction(store)
     },
   ])
 
