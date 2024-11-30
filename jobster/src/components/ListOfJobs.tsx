@@ -18,6 +18,22 @@ const jobs = [{
     jobType: 'Full-Time',
     createdAt: new Date().toLocaleDateString(),
     status: 'Interview'
+}, {
+    id: 1,
+    position: 'Dev',
+    company: 'Micro',
+    jobLocation: 'Lisbon',
+    jobType: 'Internship',
+    createdAt: new Date().toLocaleDateString(),
+    status: 'Pending',
+}, {
+    id: 2,
+    position: 'Accountant',
+    company: 'InnoWave',
+    jobLocation: 'Porto',
+    jobType: 'Full-Time',
+    createdAt: new Date().toLocaleDateString(),
+    status: 'Interview'
 },]
 
 export const ListOfJobs = () => {

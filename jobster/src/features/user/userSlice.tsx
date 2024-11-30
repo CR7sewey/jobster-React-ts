@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { toast } from 'react-toastify';
 import customFetch from '../../utils/axios';
+import { addUserToLocalStorage, getFromLocalStorage } from '../../utils/localStorage';
+import { redirect } from 'react-router-dom';
 
-type User = {
+export type User = {
     name: string,
     email: string,
     token: string,
@@ -10,7 +12,7 @@ type User = {
 
 const initialState: { isLoading: boolean, user: User | null } = {
     isLoading: false,
-    user: null,
+    user: getFromLocalStorage(),
 }
 
 export const loginUser = createAsyncThunk(
@@ -21,7 +23,9 @@ export const loginUser = createAsyncThunk(
             // console.log(thunkAPI);
             // console.log(thunkAPI.getState());
             // thunkAPI.dispatch(openModal());
-            const resp = await customFetch('/auth/login', user);
+            console.log(user, 'a')
+            const resp = await customFetch.post('/auth/login', user);
+            console.log(resp.data, 'resp')
 
             return resp.data;
         } catch (error) {
@@ -38,8 +42,8 @@ export const registerUser = createAsyncThunk(
             // console.log(thunkAPI);
             // console.log(thunkAPI.getState());
             // thunkAPI.dispatch(openModal());
-            const resp = await customFetch('/auth/register', user);
-
+            const resp = await customFetch.post('/auth/register', user);
+            console.log(resp.data)
             return resp.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error?.response?.data?.msg);
@@ -65,28 +69,34 @@ export const userSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(loginUser.pending, (state) => {
+                toast.warn('Wait a moment...')
                 state.isLoading = true
+
             })
             .addCase(loginUser.fulfilled, (state, action: PayloadAction<{ isLoading: boolean, user: User }>) => {
+                console.log(action.payload)
                 const { user } = action.payload;
                 state.isLoading = false
-                state.user = user
+                state.user = user;
+                addUserToLocalStorage(user);
                 toast.success(`welcome, ${user?.name}`);
             })
-            .addCase(loginUser.rejected, (state, action: PayloadAction<{ isLoading: boolean, user: User }>) => {
+            .addCase(loginUser.rejected, (state, { payload }) => {
                 state.isLoading = false
-                toast.error(action.payload)
+                toast.error(payload)
             })
             .addCase(registerUser.pending, (state) => {
+                toast.warn('Wait a moment...')
                 state.isLoading = true
             })
             .addCase(registerUser.fulfilled, (state, action: PayloadAction<{ isLoading: boolean, user: User }>) => {
                 const { user } = action.payload;
                 state.isLoading = false
                 state.user = user
+                addUserToLocalStorage(user);
                 toast.success(`welcome, ${user?.name}`);
             })
-            .addCase(registerUser.rejected, (state, action: PayloadAction<{ isLoading: boolean, user: User }>) => {
+            .addCase(registerUser.rejected, (state, { payload }) => {
                 state.isLoading = false
                 toast.error('Error')
             })

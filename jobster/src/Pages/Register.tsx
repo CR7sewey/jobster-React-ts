@@ -1,9 +1,21 @@
-import { Form, Link, redirect } from 'react-router-dom'
+import { Form, Link, redirect, useNavigate } from 'react-router-dom'
 import logo from '../../public/logo.svg'
 import { FormInputText } from '../components/form/FormInputText'
 import Wrapper from '../assets/wrappers/Register'
 import { toast } from 'react-toastify'
 import { registerUser } from '../features/user/userSlice'
+import { useAppSelector } from '../hooks'
+
+export const loader = (store) => async () => {
+    console.log('aqui')
+    const user = store.getState().counter.user
+    console.log(user)
+    if (user) {
+        toast.warn("To access this page please logout.");
+        return redirect("/all-jobs");
+    }
+    return null;
+}
 
 export const action = (store) => async ({ request }: { request: Request }) => {
     const dataForm = await request.formData(); // FormData Object
@@ -29,6 +41,12 @@ export const action = (store) => async ({ request }: { request: Request }) => {
 }
 
 const Register = () => {
+    const user = useAppSelector((state) => state.counter.user)
+    //const navigate = useNavigate();
+
+    if (user) {
+        //return navigate('/')
+    }
     return (
         <Wrapper>
             <Form className='form' method='post'>

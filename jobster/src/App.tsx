@@ -9,8 +9,8 @@ import AllJobs, { loader as allJobsLoader } from './Pages/AllJobs'
 import { AddJob } from './Pages/AddJob'
 import Stats from './Pages/Stats'
 import Profile from './Pages/Profile'
-import { action as loginAction, Login } from './Pages/Login'
-import Register, { action as registerAction } from './Pages/Register'
+import { action as loginAction, Login, loader as loginLoader } from './Pages/Login'
+import Register, { action as registerAction, loader as registerLoader } from './Pages/Register'
 import { ToastContainer } from 'react-toastify'
 import "react-toastify/dist/ReactToastify.css";
 import { store } from './Store'
@@ -47,13 +47,16 @@ function App() {
       path: '/login',
       element: <Login />,
       errorElement: <Error />,
-      action: loginAction(store)
+      action: loginAction(store),
+      loader: loginLoader(store)
     },
     {
       path: '/register',
       element: <Register />,
       errorElement: <Error />,
-      action: registerAction(store)
+      action: registerAction(store),
+      loader: registerLoader(store)
+
     },
   ])
 
